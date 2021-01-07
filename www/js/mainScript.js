@@ -31,7 +31,7 @@ window.onShow = function(el) {
   if (localStorage.user !== undefined) {
     var usr = $.parseJSON(localStorage.user);
     $.ajax({
-      url: "/ajax/insertUserVisit.php",
+      url: "https://goat100.com/ajax/insertUserVisit.php",
       type: "POST",
       dataType: "json",
       data: {
@@ -53,7 +53,7 @@ window.onShow = function(el) {
 setTimeout(function() {
 
 $.ajax({
-  url: "/ajax/artistNews.php?cardid=" + cid,
+  url: "https://goat100.com/ajax/artistNews.php?cardid=" + cid,
   type: "GET",
   dataType: "JSON",
   success: function(res) {
@@ -137,7 +137,7 @@ aImages = [];
           $("#chatDiv").attr("cardid", el.attr("cardid"));
           $("#message").val("");
           $.ajax({
-            url: "/ajax/getConversation.php",
+            url: "https://goat100.com/ajax/getConversation.php",
             type: "POST",
             dataType: "json",
             data: {cardid: $(this).closest(".gallery-item").attr("cardid")},
@@ -176,14 +176,14 @@ aImages = [];
 
         var am = $(this).closest(".gallery-item").attr("artsearch_m");
 
-          $("<span facebook onclick=\"fireShare('facebook'," + cid + ",'" + am + "');\"; style='cursor:pointer;'><img style='width:40px;margin-left: 10px;' src='/images/facebook-share-icon.png' /></span>").appendTo($act);
-          $("<span twitter onclick=\"fireShare('twitter'," + cid + ",'" + am + "');return false;\" style='cursor:pointer;'><img style='width:40px;margin-left: 10px;' src='/images/twitter-share-icon.png' /></span>").appendTo($act);
-          $("<span linkedin onclick=\"fireShare('linkedin'," + cid + ",'" + am + "');return false;\" style='cursor:pointer;'><img style='width:40px;margin-left: 10px;' src='/images/linkedIn-share-icon.png' /></span>").appendTo($act);
-          var a1 = $("<a><img style='width:40px;margin-left: 10px;' src='/images/btn-like.png' /></a>").appendTo($act);
+          $("<span facebook onclick=\"fireShare('facebook'," + cid + ",'" + am + "');\"; style='cursor:pointer;'><img style='width:40px;margin-left: 10px;' src='https://goat100.com/images/facebook-share-icon.png' /></span>").appendTo($act);
+          $("<span twitter onclick=\"fireShare('twitter'," + cid + ",'" + am + "');return false;\" style='cursor:pointer;'><img style='width:40px;margin-left: 10px;' src='https://goat100.com/images/twitter-share-icon.png' /></span>").appendTo($act);
+          $("<span linkedin onclick=\"fireShare('linkedin'," + cid + ",'" + am + "');return false;\" style='cursor:pointer;'><img style='width:40px;margin-left: 10px;' src='https://goat100.com/images/linkedIn-share-icon.png' /></span>").appendTo($act);
+          var a1 = $("<a><img style='width:40px;margin-left: 10px;' src='https://goat100.com/images/btn-like.png' /></a>").appendTo($act);
           a1.bind("click", function() {
             vote('Voted for', cid, artName, 1);
           })
-          var a2 = $("<a><img style='width:40px;margin-left: 10px;' src='/images/btn-unlike.png' /></a>").appendTo($act);
+          var a2 = $("<a><img style='width:40px;margin-left: 10px;' src='https://goat100.com/images/btn-unlike.png' /></a>").appendTo($act);
           a2.bind("click", function() {
             vote('Unvote', cid, artName, -1);
           })
@@ -399,7 +399,7 @@ $(document).ready(function(){
 });
 function checkGGlogin(response) {
    $.ajax({
-		url: "/ajax/loginGG.php",
+		url: "https://goat100.com/ajax/loginGG.php",
 		type: "POST",
 		data: { fbid: response[0].uid },
 		dataType: "json",
@@ -407,7 +407,7 @@ function checkGGlogin(response) {
 
 			if (res["id"] === undefined) {
 				$.ajax({
-					url:"/ajax/getTranslation.php",
+					url:"https://goat100.com/ajax/getTranslation.php",
 					type: "POST",
 					data: { term: "Google account does not exist in GOAT100"},
 					success:function(res) {
@@ -429,7 +429,7 @@ function checkGGlogin(response) {
 function checkFBlogin(providerData) {
 
    $.ajax({
-		url: "/ajax/loginFB.php",
+		url: "https://goat100.com/ajax/loginFB.php",
 		type: "POST",
 		data: { fbid: providerData[0].uid },
 		dataType: "json",
@@ -501,7 +501,7 @@ function startAvatar() {
  function resetAvatar() {
 	 var user = $.parseJSON(localStorage.user);
    	$.ajax({
-   		url: "/ajax/removeUserAvatar.php",
+   		url: "https://goat100.com/ajax/removeUserAvatar.php",
    		type: "POST",
    		data: {id: user.id},
    		success:function() {
@@ -534,7 +534,7 @@ $('#saveAvatar').on('click', function(ev) {
 			img = response.replace("data:image/png;base64,", "");
 
 			$.ajax({
-				url: "/ajax/saveUserAvatar.php",
+				url: "https://goat100.com/ajax/saveUserAvatar.php",
 				type: "POST",
 				data: {header: img, id: user.id},
 				success: function(res) {
@@ -559,7 +559,7 @@ $('#saveAvatar').on('click', function(ev) {
 function checkTWlogin(response) {
 	console.log(response);
    $.ajax({
-		url: "/ajax/loginTW.php",
+		url: "https://goat100.com/ajax/loginTW.php",
 		type: "POST",
 		data: { fbid: response[0].uid },
 		dataType: "json",
@@ -567,7 +567,7 @@ function checkTWlogin(response) {
 
 			if (res["id"] === undefined) {
 				$.ajax({
-					url:"/ajax/getTranslation.php",
+					url:"https://goat100.com/ajax/getTranslation.php",
 					type: "POST",
 					data: { term: "Twitter account does not exist in InVastor"},
 					success:function(res) {
@@ -589,7 +589,7 @@ function checkTWlogin(response) {
 function registerTW(providerData) {
 	console.log(providerData[0]);
    $.ajax({
-		url: "/ajax/registerTW.php",
+		url: "https://goat100.com/ajax/registerTW.php",
 		type: "POST",
 		data: { tw: JSON.stringify(providerData[0]) },
 		dataType: "json",
@@ -615,7 +615,7 @@ function registerTW(providerData) {
 function registerGG(providerData) {
 
    $.ajax({
-		url: "/ajax/registerGG.php",
+		url: "https://goat100.com/ajax/registerGG.php",
 		type: "POST",
 		data: { gg: JSON.stringify(providerData[0]) },
 		dataType: "json",
@@ -640,7 +640,7 @@ function registerGG(providerData) {
 }
 function registerFB(providerData) {
    $.ajax({
-		url: "/ajax/registerFB.php",
+		url: "https://goat100.com/ajax/registerFB.php",
 		type: "POST",
 		data: { fb: JSON.stringify(providerData[0]) },
 		dataType: "json",
@@ -681,7 +681,7 @@ function loginEmail() {
 		} else {
 
 			$.ajax({
-				url: "/ajax/registerEmail.php",
+				url: "https://goat100.com/ajax/registerEmail.php",
 				type: "POST",
 				data: { em: JSON.stringify(user.providerData[0]) },
 				dataType: "json",
@@ -720,7 +720,7 @@ function registerEmail() {
 		} else {
 
 			$.ajax({
-				url: "/ajax/registerEmail.php",
+				url: "https://goat100.com/ajax/registerEmail.php",
 				type: "POST",
 				data: { em: JSON.stringify(user.providerData[0]) },
 				dataType: "json",
@@ -758,7 +758,7 @@ function loadNews() {
   if (localStorage.user !== undefined) {
     var u = $.parseJSON(localStorage.user);
     $.ajax({
-      url: "/ajax/insertUserVisit.php",
+      url: "https://goat100.com/ajax/insertUserVisit.php",
       type: "POST",
       dataType: "json",
       data: {
@@ -770,7 +770,7 @@ function loadNews() {
     })
   }
   $.ajax({
-   url: "/ajax/getNews.php",
+   url: "https://goat100.com/ajax/getNews.php",
    type: "GET",
    dataType: "json",
    success: function(res) {
@@ -839,7 +839,7 @@ function loginUser(res) {
 function checkFBlogin(providerData) {
 
    $.ajax({
-		url: "/ajax/loginFB.php",
+		url: "https://goat100.com/ajax/loginFB.php",
 		type: "POST",
 		data: { fbid: providerData[0].uid },
 		dataType: "json",
@@ -862,7 +862,7 @@ function checkFBlogin(providerData) {
 }
 function checkTWlogin(providerData) {
    $.ajax({
-		url: "/ajax/loginTW.php",
+		url: "https://goat100.com/ajax/loginTW.php",
 		type: "POST",
 		data: { twid: providerData[0].uid },
 		dataType: "json",
@@ -886,7 +886,7 @@ function checkTWlogin(providerData) {
 function checkGGlogin(providerData) {
 	$("#loginModal").modal("close");
    $.ajax({
-		url: "/ajax/loginGG.php",
+		url: "https://goat100.com/ajax/loginGG.php",
 		type: "POST",
 		data: { ggid: providerData[0].uid },
 		dataType: "json",
@@ -936,7 +936,7 @@ function saveProfile() {
 		}
 	}
 	$.ajax({
-		url: "/ajax/updateUserProfile.php",
+		url: "https://goat100.com/ajax/updateUserProfile.php",
 		data: upd,
 		type: "POST",
 		success:function(res) {
@@ -976,7 +976,7 @@ function vote(what, cardid, artName, addVote) {
   var user = $.parseJSON(localStorage["user"]);
 
   $.ajax({
-   url: "/ajax/checkLastVote.php",
+   url: "https://goat100.com/ajax/checkLastVote.php",
    type: "POST",
    data: {
      artistid: cardid,
@@ -1012,7 +1012,7 @@ function goVote(what, cardid, artName, addVote, userid) {
   }).then((result) => {
     if (result.value) {
         $.ajax({
-          url: "/ajax/addVote.php",
+          url: "https://goat100.com/ajax/addVote.php",
           type: "POST",
           data: {
             userid: userid,
@@ -1022,7 +1022,7 @@ function goVote(what, cardid, artName, addVote, userid) {
           },
           success: function(res) {
             $.ajax({
-              url: "/ajax/updateCardVotes.php",
+              url: "https://goat100.com/ajax/updateCardVotes.php",
               type: "POST",
               data: {
                 vote: addVote,
@@ -1071,7 +1071,7 @@ function sendChatMessage() {
   };
 
   $.ajax({
-    url: "/ajax/sendMessage.php",
+    url: "https://goat100.com/ajax/sendMessage.php",
     type: "POST",
     dataType: "json",
     data: obj,
