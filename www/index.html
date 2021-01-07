@@ -6,8 +6,9 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
-    <!-- Good default declaration:
+    <meta http-equiv="Content-Security-Policy" content="default-src blob: * data: gap: https://ssl.gstatic.com https://goat100.com 'unsafe-eval'
+  'unsafe-inline'; media-src *; img-src * https://goat100.com/images https://goat100.com/Test_Enviroment/images data: content:;">
+  <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
     * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
@@ -19,23 +20,23 @@
 
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-<link rel="stylesheet" href="https://goat100.com/css/bootstrap.css" type="text/css"/>
-<link rel="stylesheet" href="https://goat100.com/css/sweetalert.css" />
-<link rel="stylesheet" href="https://goat100.com/css/typeahead.css" type="text/css"/>
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+<link rel="stylesheet" href="css/sweetalert.css" />
+<link rel="stylesheet" href="css/typeahead.css" type="text/css"/>
 <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-flash-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/fc-3.2.4/fh-3.1.3/sc-1.4.4/sl-1.2.5/datatables.min.css"/>-->
-<link rel="stylesheet" href="https://goat100.com/css/main.css?v=<?=time()?>" type="text/css"/>
-<link rel="stylesheet" href="https://goat100.com/css/croppie.css" type="text/css"/>
+<link rel="stylesheet" href="css/main.css?v=<?=time()?>" type="text/css"/>
+<link rel="stylesheet" href="css/croppie.css" type="text/css"/>
 
-<link rel="stylesheet" href="https://goat100.com/css/dropzone.css" type="text/css"/>
+<link rel="stylesheet" href="css/dropzone.css" type="text/css"/>
 
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
- <link href="https://goat100.com/css/gallery-dark-materialize.min.css" rel="stylesheet">
+ <link href="css/gallery-dark-materialize.min.css" rel="stylesheet">
  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- <link rel="stylesheet" href="https://goat100.com/css/social.css" type="text/css"/>
-  <link rel="stylesheet" href="https://goat100.com/css/select2.css" type="text/css"/>
- <link rel="stylesheet" href="https://goat100.com/css/justifiedGallery.min.css" type="text/css"/>
-<link rel="stylesheet" href="https://goat100.com/css/lightgallery.css" type="text/css"/>
-<link rel="stylesheet" href="https://goat100.com/css/all.css" />
+ <link rel="stylesheet" href="css/social.css" type="text/css"/>
+  <link rel="stylesheet" href="css/select2.css" type="text/css"/>
+ <link rel="stylesheet" href="css/justifiedGallery.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/lightgallery.css" type="text/css"/>
+<link rel="stylesheet" href="css/all.css" />
 
  <script  src="https://code.jquery.com/jquery-2.2.4.min.js"  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="  crossorigin="anonymous"></script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -858,7 +859,19 @@ function locationHashChanged() {
   art = window.location.hash.substring(1);
 
   if (art != "") {
+    setTimeout(function() {
+      $("[artsearch='" + art + "']").trigger("click");
+      var ww = setInterval(function() {
+        if ($(".back-btn").length > 0) {
+          clearInterval(ww);
+    //      $(".back-btn").attr("onclick", "history.pushState({}, 'goat100','/');");
+          $('[share]').popover('hide');
+          $("[share]").remove();
+        //  $("#chatDiv").hide();
 
+        }
+      }, 100)
+    }, 1500)
   } else {
     $(".back-btn").trigger("click");
   //  $("#chatDiv").hide();
@@ -958,6 +971,7 @@ $(document).ready(function() {
 
     localStorage.spotify_token = "BQDuSiGmD-4kRctzDL8zVuu5ApD3OmJtsNrVeuvrL5Pbrb08QoiiYPf7sdlNMvjgfsj6t7JGMf8VLMfCD4JwO3LzK_vr18C8cqXuWhpLIe8ghnr_e8lZmaccK80QMAuPm_Yu807FYMKT3Ipd_092uTRu8Y0n_B0IyQ";
     localStorage.spotify_refresh = "AQDqfv8-Mfk1EusrjaRepa3s9IGVMlk8Ov5zt6yOeCZrKq25z4btTbGH9qEtqjVD8SyY0ulm2-8pi2IbE9FfAQrAvXycSUF9W_9LVfj11LDNt3BTg4iX-mLumzUfDuJBpXE";
+  //  window.history.pushState({}, "GOAT100", "/");
     $.ajax(
     {
       method: "POST",
