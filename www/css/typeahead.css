@@ -1,0 +1,46 @@
+
+
+.typeahead.dropdown-menu {
+  cursor: pointer;
+  position: relative;
+  top: -18px !important;
+  z-index: 1000;
+  display: none;
+  float: left;
+  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #ffffff;
+  color: black;
+  font-size: 15px;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.typeahead .dropdown-item {
+  display: block;
+  padding: 3px 20px;
+  min-width: 100%;
+  clear: both;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: black;
+  font-size:17px;
+  white-space: nowrap;
+}
+
+.typeahead li {
+  width: 100%;
+}
+.typeahead li:hover {
+  color:red;
+}

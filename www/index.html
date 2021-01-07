@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="https://goat100.com/css/bootstrap.css" type="text/css"/>
+<link rel="stylesheet" href="https://goat100.com/css/sweetalert.css" />
+<link rel="stylesheet" href="https://goat100.com/css/typeahead.css" type="text/css"/>
+<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-flash-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/fc-3.2.4/fh-3.1.3/sc-1.4.4/sl-1.2.5/datatables.min.css"/>-->
+<link rel="stylesheet" href="https://goat100.com/css/main.css?v=<?=time()?>" type="text/css"/>
+<link rel="stylesheet" href="https://goat100.com/css/croppie.css" type="text/css"/>
+
+<link rel="stylesheet" href="https://goat100.com/css/dropzone.css" type="text/css"/>
+
+<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+ <link href="https://goat100.com/css/gallery-dark-materialize.min.css" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <link rel="stylesheet" href="https://goat100.com/css/social.css" type="text/css"/>
+  <link rel="stylesheet" href="https://goat100.com/css/select2.css" type="text/css"/>
+ <link rel="stylesheet" href="https://goat100.com/css/justifiedGallery.min.css" type="text/css"/>
+<link rel="stylesheet" href="https://goat100.com/css/lightgallery.css" type="text/css"/>
+<link rel="stylesheet" href="https://goat100.com/css/all.css" />
+
+ <script  src="https://code.jquery.com/jquery-2.2.4.min.js"  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="  crossorigin="anonymous"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.8.2/sweetalert2.js"></script>
+ <!--<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-flash-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/fc-3.2.4/fh-3.1.3/sc-1.4.4/sl-1.2.5/datatables.min.js"></script>-->
+ <script src="js/croppie.js"></script>
+ <script src="js/base64.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+ <script src="js/imagesloaded.pkgd.min.js"></script>
+ <script src="js/masonry.pkgd.min.js"></script>
+  <script src="js/socket.js?v=10"></script>
+  <script src="js/popover.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-flash-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/fc-3.2.4/fh-3.1.3/sc-1.4.4/sl-1.2.5/datatables.min.js"></script>
+  <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.16/pagination/input.js"></script>
+  <script type="text/javascript"  src="js/yadcf.js"></script>
+  <script src="js/lightgallery.js"></script>
+
+  <script src="js/select2.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+    <!-- Lato Font -->
+<style>
+
+  .popover-title { display: none; }
+  .popover.top {
+      margin-top: -31px !important; //or any value that you want
+  }
+  .demo-list-three {
+		width: 77%;
+		text-indent: -1.9em;
+		padding-left: 51px!important;
+		list-style-type: none;
+	}
+  .chatMessages {
+  	width: 90%;
+  	background-color: white;
+  	font-family: sans-serif;
+  	max-height: 600px;
+    overflow-y: auto;
+  	bottom: 175px;
+    background: transparent;
+
+  }
+	span.btn-floating.btn-large.waves-effect.waves-light {
+		width: 100px;
+		height: 100px;
+		line-height: 98px;
+		font-size: 48px;
+
+	}
+  .carousel .carousel-item img {
+    width: auto;
+      height: 100%;
+
+}
+	@media screen
+		and (min-device-width: 1200px)
+		and (max-device-width: 1600px)
+		and (-webkit-min-device-pixel-ratio: 1) {
+			span.btn-floating.btn-large.waves-effect.waves-light {
+			margin-bottom: 8px;
+			margin-top: -111px;
+		}
+	}
+
+	@media only screen and (max-width: 992px){
+			.gallery .gallery-action {
+		     right: -43px;
+	     }
+       .gallery .gallery-action img {
+         width: 34px;
+       }
+	}
+
+	.btn, .btn-large {
+    background-color: #713e2ac4;
+
+}
+.preloader-wrapper {
+    height: 100%;
+    width: 100%;
+    background: #FFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+}
+
+.preloader-wrapper .preloader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 120px;
+}
+
+    /* Quiz Labels */
+
+label {
+    margin-right: 10px;
+}
+
+[type="radio"]:not(:checked),
+[type="radio"]:checked {
+  position: initial;
+  left: 0px;
+  opacity: 1
+}
+.question{
+    font-weight: 600;
+}
+.answers {
+    margin-bottom: 20px;
+}
+
+
+/* Rating Star Widgets Style */
+.rating-stars ul {
+  list-style-type:none;
+  padding:0;
+
+  -moz-user-select:none;
+  -webkit-user-select:none;
+}
+.rating-stars ul > li.star {
+  display:inline-block;
+
+}
+
+/* Idle State of the stars */
+.rating-stars ul > li.star > i.fas {
+  font-size:2.5em; /* Change the size of the stars */
+  color:#ccc; /* Color on idle state */
+}
+
+/* Hover state of the stars */
+.rating-stars ul > li.star.hover > i.fas {
+  color:#ff0000;
+}
+
+/* Selected state of the stars */
+.rating-stars ul > li.star.selected > i.fas {
+  color:#e63131;
+}
+
+
+
+
+
+.success-box {
+  margin:50px 0;
+  padding:10px 10px;
+  border:1px solid #eee;
+  background:#f9f9f9;
+  display: none;
+}
+
+.success-box img {
+  margin-right:10px;
+  display:inline-block;
+  vertical-align:top;
+}
+
+.success-box > div {
+  vertical-align:top;
+  display:inline-block;
+  color:#888;
+}
+
+
+    .socialHandles{
+
+      font-size:30px;
+    }
+
+    .socialHandles i:hover{
+
+font-size:35px;
+}
+
+.socialIcon { transition: all .2s ease-in-out;color:#ccc; }
+.socialIcon:hover { transform: scale(1.5,1.5); }
+
+
+.HeaderTitle {
+  position: relative;
+  text-transform: uppercase;
+  font-size: 2em;
+  letter-spacing: 4px;
+  overflow: hidden;
+  background: linear-gradient(90deg, #f00, #fff, #f00);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  animation: animateHeader 3s linear infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes animateHeader {
+  0% {
+    background-position: -500%;
+  }
+  100% {
+    background-position: 500%;
+  }
+}
+
+
+ a:hover {
+    color: #e63131;
+    text-decoration: none!important;
+}
+
+
+    button.btn.btn-raised.btn-primary.submit {
+      color: #fff;
+      background-color: #ff0000 !important;
+      border-color: #ff0101a3;
+    }
+
+
+
+
+    .demo-list-three {
+      width: 77%;
+      text-indent: -1.9em;
+      padding-left: 51px !important;
+      list-style-type: none;
+    }
+
+    a#scale-demo-trigger,a#scale-demo-trigger:active,a#scale-demo-trigger:focus {
+    text-decoration: none!important;
+    color: white!important;
+}
+
+    span.btn-floating.btn-large.waves-effect.waves-light,a#scale-demo-trigger {
+      width: 100px;
+      height: 100px;
+      line-height: 98px;
+      font-size: 48px;
+
+    }
+
+    @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+      span.btn-floating.btn-large.waves-effect.waves-light,a#scale-demo-trigger,a#scale-demo {
+        margin-bottom: 8px;
+        margin-top: -111px;
+      }
+    }
+
+    @media only screen and (max-width: 992px) {
+      .gallery .gallery-action {
+        right: -43px;
+      }
+    }
+
+
+    #navbar {
+      background-color: #333;
+      position: fixed;
+      bottom: -100px;
+      width: 100%;
+      height: auto;
+      max-height: 100px;
+      display: block;
+      transition: bottom 0.3s;
+      z-index: 8;
+    }
+
+    #navbar a {
+      /*   float: left;
+     */
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      /*       padding: 15px;
+ */
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    #navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    #navbar img {
+      width: 100%;
+      height: auto;
+    }
+
+    @media only screen and (max-width: 600px) {
+
+      #navbar img {
+        width: 270%;
+        height: auto;
+
+      }
+    }
+
+    .close {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      right: 0%;
+      padding: 1px 4px;
+      transform: translate(0%, -246%);
+    }
+
+    .close:hover {
+      background: #bbb;
+    }
+
+</style>
+  </head>
+
+  <body style="overflow-y:auto !important;" class="blue-grey darken-4">
+    <div class="preloader-wrapper">
+    <div class="preloader">
+      <img src="images/GOAT_Small.svg" style=" margin-bottom: 10px;">
+      <div class="progress">
+
+        <div class="indeterminate"></div>
+    </div>
+
+    </div>
+  </div>
+    <!-- Navbar and Avatar -->
+    <nav class="nav-extended nav-full-Avatar z-depth-0 blue-grey darken-3" style="height:100vh !important;">
+	 <div class="nav-background">
+		<div class="active"  id='bg'>
+			<div id='stars'></div>
+			<div id='stars2'></div>
+			<div id='stars3'></div>
+		</div>
+      </div>
+      <div class="nav-background">
+
+      </div>
+      <div class="nav-wrapper container">
+
+        <a href="#" onclick="$('#nav-mobile').toggle();" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+
+	      <li><a class="waves-effect waves-light btn modal-trigger" login href="#loginModal">Login</a></li>
+        <li><a class="waves-effect waves-light btn modal-trigger" logout href="javascript:delete localStorage.user;window.location.reload();">Logout</a></li>
+					<li><a class="waves-effect waves-light btn modal-trigger" register href="#registerModalForm">Register</a></li>
+            	<li><a class="waves-effect waves-light btn modal-trigger" id="gallery" style="display:none;" href="javascript:loadGallery();">Gallery</a></li>
+          	<li><a class="waves-effect waves-light btn modal-trigger" id="news" href="javascript:loadNews();">News(<span style="font-size:16px;" newNews id="newNews"></span>)</a></li>
+					<li><a class='dropdown-button btn' href='#' data-activates='about-dropdown' data-belowOrigin="true" data-constrainWidth="false">About</a></li>
+
+          <li profile style="display:none;"><a class="waves-effect waves-light btn modal-trigger" href="#profileForm"><img style="width:40px;height:40px;" src="" />&nbsp;<span></span></a></li>
+        </ul>
+        <!-- Dropdown Structure -->
+        <ul id='about-dropdown' class='dropdown-content'>
+          <li><a href="https://www.instagram.com/goat_100_" target="_blank"><img src="images/instagram.png" style="width:33%;height:auto;margin-left:10%;"></img></a></li>
+          <li><a href="https://www.twitter.com/goat_100_" target="_blank"><img src="images/twitter-box.png" style="width:33%;height:auto;margin-left:10%;"></img></a></li>
+        </ul>
+
+
+      </div>
+	   <div class="nav-header valign-wrapper" style="padding:70px 0;">
+       <div class="center">
+         <img src="images/GOAT_Icon.svg" style="width:63%;height:  auto;">
+         <div class="tagline">
+           <h2 class="HeaderTitle">Greatest of all time Voted by you</h2>
+         </div>
+       </div>
+      </div>
+
+
+      <div class="categories-wrapper" style="margin-top:-125px;<!">
+          <div class="categories-container pin-top" style="top: 0px;max-height: 60px;overflow:hidden;">
+            <ul class="categories container">
+
+              <li class="active"><a c="hottest" onclick="showCat(this);return false;" style="cursor:pointer;">🔥</a></li>
+              <li><a c="goat" onclick="showCat(this);return false;" style="cursor:pointer;">🐐</a></li>
+              <li><a c="uk"  onclick="showCat(this);return false;"  style="cursor:pointer;">🇬🇧</a></li>
+              <li><a c="all"  onclick="showCat(this);return false;"  style="cursor:pointer;">All</a></li>
+              <li><a  class="waves-effect waves-light btn modal-trigger" onclick="initialzeSearch();" href="#searchModal" style="cursor:pointer;"><i style="font-size:19px;" class="fa fa-search"></i></a></li>
+              <li style="display:none;">  <input style="color:white;" id="filter_category" /></li>
+            </ul>
+            <div style="float:right;margin-right:10px;margin-top:-52px;">
+
+                <select id="sortcols" style="width:100px;float:left;display:block;background-color:transparent;color:white;" onchange="sortTable();">
+              <!--     { data: "id" },
+                { data: "category" },
+                { data: "name" },
+                {data: "html"},
+                {data: "LitRank"},
+                {data: "OverallVotes"},
+                {data: "totalvotes"},
+                {data: "visits"},
+                {data: "news"},
+                {data: "comments"} -->
+                  <option style="color:black;" selected value="6">Total Votes</option>
+                  <option style="color:black;" value="5">Visitors Votes</option>
+                  <option style="color:black;" value="4">Redactor Votes</option>
+                  <option style="color:black;" value="7">Visitor's visits</option>
+                  <option style="color:black;" value="8">News</option>
+                  <option style="color:black;" value="9">Comments</option>
+                </select>
+                  <div id="sortOrder" style="float:left;right:-30px;" onclick="$(this).toggleClass('asc');sortTable();" class="sort"></div>
+
+              </div>
+            </div>
+
+          </div>
+
+        <!--  <div id="sc" class="input-field col s6 s12 white-text" style="position:relative;top:-64px;right:0;float:right;padding-right:75px;max-width:257px;overflow:hidden;">
+            <input type="text" class="twitter-typeahead" placeholder="Search" id="card_search" style="background: black;height:40px;border:1px solid white;color:white;border-radius: 5px;" data-provide="typeahead">
+          </div>-->
+    </nav>
+
+    <ul class="side-nav" id="nav-mobile" style="display:none;transform: translateX(0px);">
+
+      <li><a class="modal-trigger" id="about" href="#AboutModal"><img src="images/GOAT_Small.svg" style="width: 15%;height:  auto;height: 48px;line-height: 48px;margin: 0 20px 0 0;" />About</a></li>
+      <li login><a class="modal-trigger" login href="#loginModal"><i class="material-icons">login</i>Login</a></li>
+      <li register><a class="modal-trigger" register  href="#registerModalForm"><i class="material-icons">login</i>Register</a></li>
+      <li profile style="display:none;"><a class="modal-trigger"  href="#profileForm" ><i class="material-icons">account_box</i>My Account</a></li>
+      <li><a target="_blank"  href="https://www.instagram.com/Goat_100_"><i class="fab fa-instagram" style="font-size: 25px;"></i>Instagram</a></li>
+      <li><a target="_blank" href="https://www.twitter.com/Goat_100_"> <i class="fab fa-twitter" style="font-size: 25px;"></i>Twitter</a></li>
+      <li><a href="privacy-policy.html"><i class="material-icons">policy</i>Privacy Policy</a></li>
+      <li><a href="terms-and-conditions.html"><i class="material-icons">privacy_tip</i>Terms &amp; Conditions</a></li>
+
+    </ul>
+    <!-- Gallery -->
+    <div id="portfolio" class="section gray">
+
+      <div id="aaa" style="display:none;">
+        <table id="artists"  class="display"  style="display:none;color:white;" cellspacing="0">
+          <thead>
+            <th>ID</th>
+            <th>category</th>
+            <th>name</th>
+            <th style="display:none;">html</th>
+            <th>LitRank</th>
+            <th>OverallVotes</th>
+            <th>totalvotes</th>
+            <th>visits</th>
+            <th>news</th>
+            <th>comments</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="gallery row" id="rows" style="display:block;">
+
+      </div><!-- /.container -->
+    </div>
+    <div id="newsDiv" class="section gray">
+
+    </div>
+	</div>
+<!-- Modals -->
+  <style>
+    #artists td:nth-of-type(4) {
+      display:none;
+    }
+  </style>
+  <div id="searchModal" class="modal" style="width:700px;height:auto;top: 50px !important;margin:-90px auto;background:transparent !important;border:none !important;box-shadow:none !important;">
+
+  <!--   <div class="modal" id="AboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+      <div class="modal-content"style="text-align: center;">
+        <div class="modal-header">
+
+         <img src ="images\GOAT_Small.svg" style="width:30%;height:  auto;"></img>
+
+        </div>
+        <form>
+          <div class="form-group">
+
+            <h5 for="list">Pick a list</h5>
+            <select class="form-control" id="catlist">
+              <option value="hottest">🔥 Hottest</option>
+              <option value="goat">🐐 Goat</option>
+              <option value="uk">🇬🇧 United Kingdom</option>
+              We count up request votes weekly to see who should be added to the list! If a new artist is added then
+              the lowest card (100)
+              will be replaced.
+            </select>
+            <h5 for="formGroupExampleInput2">Artist</h5>
+            <select class="form-control"  style="width: 100%" id="card_search">
+            </select>
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+
+<div class="modal" id="adModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block; padding-right: 17px;">
+     <div class="modal-dialog modal-dialog-centered" style="margin-left:15px;" role="document">
+       <div class="modal-content" style="text-align: center;padding:0px;">
+         <div class="modal-header">
+
+           <h3>You might also like...</h3><i id="voteIcon" class="material-icons">arrow_drop_down</i>
+
+         </div>
+         <div class="modal-body">
+            <img class="ad-img z-depth-5" style="width:60%;" src="images\tribe.jpg">
+           <blockquote>
+             A Tribe Called Quest
+           </blockquote>
+           <button type="button" class="btn btn-raised btn-primary" onclick="$('[infos]').css({zIndex:2});$('#adModal').hide();" data-dismiss="modal" aria-label="Close">Discover</button>
+           </div>
+         <div class="modal-footer">
+
+           <button type="button" class="btn btn-raised btn-primary submit" onclick="$('#adModal').hide();$('[infos]').css({zIndex:2});" data-dismiss="modal" aria-label="Close">Close</button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+   <!-- Modal -->
+   <div id="AboutModal" class="modal" style="width:700px;height:auto;top: 50px !important;margin:-90px auto;background:transparent !important;border:none !important;box-shadow:none !important;">
+
+<!--   <div class="modal" id="AboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+       <div class="modal-content"style="text-align: center;">
+         <div class="modal-header">
+
+          <img src ="images\GOAT_Small.svg" style="width:30%;height:  auto;"></img>
+
+         </div>
+         <div class="modal-body" >
+
+       <p><strong>GOAT100</strong> or Greatest of All Time 100 is a dynamic card list of the top 100 artists in a chosen category.
+       The votes are solely depended on users voting to finally answer the peoples question... <strong>
+         Who is the greatest rapper of all time?
+     </strong>
+       </p>
+       <p>This is for the culture to showcase who really our fan favourites and who deserves respect for their artistry. From classic artists to emerging talent, we showcase
+         the artists and their music that takes them to the top of the peoples chart!
+         <br>	No tampering nor influence from anyone, the list is the truth!
+         <br> Request new artists at the bottom of the lists to have new talent showcase or classic artists ready to reclaim their position!
+         <br>	Every week, Artists who are in the bottom 10 are liable for delegation so new requested artists can take their place!
+         <br>	So to keep your favourite artist in the list, you must vote!
+         <br>Users can only vote once on each card, each day to avoid spamming!
+         <br> You must register to make a vote which is just a simple account which can be made through Facebook, Twitter and Google+ accounts.
+         <br> Each board has social links, Spotify and Apple Music links aswell as our own catered information on each artist and their accolades. There are also unique comment boards for each artist to chat away!
+       </p>
+       <p>Shout out to all the music publications, radio stations, podcasts and online debates across the world that have kept the converstation going! 	</p>
+       <ul>
+
+           <li>🔥 = Hottest 100 - The top 100 current artists voted by users!</li>
+           <li>🐐 = GOAT 100 - The top 100 rappers of all time voted by you!</li>
+           <li>🇬🇧 =  UK - The top current artists voted by users!</li>
+           <li>More lists coming soon!</li>
+         </ul>
+         <br>
+         <p>		For all enquiries, please contact via <a href="mailto:info@goat100.com">info@goat100.com</a> </p>
+         <p>		Special Thanks to - Nenad Markovic, Materialize Themes, Material Design, all the help via forums and tutorials W3Schools, StackOverflow, CodePens, Google Search (will reference all :) All photography will be cited in future update but please contact if you want credit/remove. </p>
+         <p>		Website will be updated regularly	with more cool functions coming to further engage with! </p>
+
+           </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-raised btn-primary submit" data-dismiss="modal"
+             aria-label="Close">Enjoy</button>
+         </div>
+       </div>
+   </div>
+
+<div id="loginModal" class="modal" style="width:50%;margin: 50px auto;background:transparent !important;border:none !important;box-shadow:none !important;">
+
+    <div class="modal-content">
+
+      <div class="modal-body">
+		 <div class="omb_login">
+		<center>
+    	<h4 class="omb_authTitle">Login using</h4>
+        <div class="row  omb_socialButtons">
+    	    <div class="col-md-offset-3 col-xs-4 col-sm-2">
+		        <a href="javascript:authentificate('facebook',checkFBlogin);" class="btn btn-lg btn-block omb_btn-facebook">
+			        <i class="fa fa-facebook"></i>
+
+		        </a>
+	        </div>
+        	<div class="col-xs-4 col-sm-2">
+		        <a href="javascript:authentificate('twitter', checkTWlogin);"  class="btn btn-lg btn-block omb_btn-twitter">
+			        <i class="fa fa-twitter"></i>
+
+		        </a>
+	        </div>
+        	<div class="col-xs-4 col-sm-2">
+		        <a href="javascript:authentificate('google', checkGGlogin);" class="btn btn-lg btn-block omb_btn-google">
+			        <i class="fa fa-google-plus"></i>
+
+		        </a>
+	        </div>
+		</div>
+		<div class="row omb_loginOr">
+			<div class="col-md-offset-3 col-xs-12 col-sm-6">
+				<hr class="omb_hrOr">
+				<span class="omb_spanOr">or</span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-offset-3 col-xs-12 col-sm-6">
+			    <form class="omb_loginForm" action="" id="login_form" autocomplete="off" method="POST">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="text" class="form-control" name="email" id="email" placeholder="Email">
+					</div>
+					<span class="help-block"></span>
+
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input  type="password" class="form-control" name="password" id="password" placeholder="Password">
+					</div>
+				</form>
+				 <button class="btn btn-lg btn-primary btn-block" id="resetPassword" onclick="resetPassword();" style="margin-top:20px;">Forgot password</button>
+                <button class="btn btn-lg btn-primary btn-block" id="login" onclick="loginEmail();" style="margin-top:20px;">Login</button>
+
+			</div>
+    	</div>
+
+      </div>
+
+    </div>
+
+  </div>
+  </center>
+
+</div>
+<div id="registerModalForm" class="modal" style="width:50%;margin: 50px auto;background:transparent !important;border:none !important;box-shadow:none !important;">
+
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+		 <div class="omb_login">
+		<center>
+    	<h4 class="omb_authTitle">Register using</h4>
+        <div class="row  omb_socialButtons">
+    	    <div class="col-md-offset-3 col-xs-4 col-sm-2">
+		        <a href="javascript:authentificate('facebook',registerFB);" class="btn btn-lg btn-block omb_btn-facebook">
+			        <i class="fa fa-facebook"></i>
+
+		        </a>
+	        </div>
+        	<div class="col-xs-4 col-sm-2">
+		        <a href="javascript:authentificate('twitter', registerTW);" class="btn btn-lg btn-block omb_btn-twitter">
+			        <i class="fa fa-twitter"></i>
+
+		        </a>
+	        </div>
+        	<div class="col-xs-4 col-sm-2">
+		        <a href="javascript:authentificate('google', registerGG);" class="btn btn-lg btn-block omb_btn-google">
+			        <i class="fa fa-google-plus"></i>
+
+		        </a>
+	        </div>
+		</div>
+		<div class="row omb_loginOr">
+			<div class="col-md-offset-3 col-xs-12 col-sm-6">
+				<hr class="omb_hrOr">
+				<span class="omb_spanOr">or</span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-offset-3 col-xs-12 col-sm-6">
+			    <form class="omb_loginForm" action="" id="register_form" autocomplete="off" method="POST">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="text" class="form-control" name="email_register" id="email_register" placeholder="Email">
+					</div>
+					<span class="help-block"></span>
+
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input  type="password" class="form-control" name="password_register" id="password_register" placeholder="Password">
+					</div>
+				</form>
+                <button class="btn btn-lg btn-primary btn-block" id="login" onclick="registerEmail();" style="margin-top:20px;">Register</button>
+
+			</div>
+    	</div>
+
+      </div>
+
+
+
+  </div>
+  </center>
+  </div>
+</div>
+<div id="disqus_thread"></div>
+<div id="profileForm" class="modal" style="width:50%;margin:50px auto;background:transparent !important;border:none !important;box-shadow:none !important;">
+
+	<div class="modal-content">
+		<center>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="row" style="margin-top:10px;">
+							<div style="width:100%;text-align:center;">
+								<div id="picture_container_avatar" style="min-height:155px;margin-top:5px;width:100%;margin:0px auto;">
+								  <img class="picture_avatar" style="max-width:80px;width:80px;height:auto;" id="picture_avatar" src=''>
+							   </div>
+
+							</div>
+						 </div>
+						 <div class="row">
+							<div class="col-md-12" id="croppie_container_avatar" style="display:none;min-height:150px;margin:10px auto;">
+							   <div class="text-center" style="width:100%;">
+								  <div id="upload_avatar"></div>
+							   </div>
+							</div>
+						 </div>
+						 <div class="row" style="margin-top: 10px;">
+							<div class="btn-group">
+								  <input type="file" accept=".gif,.png,.jpg,.jpeg" style="display:none;" id="images_avatar" />
+								  <button type="button" id="setAvatar" onclick="$('#images_avatar').trigger('click');" class="btn btn-primary" style="min-width:118px;margin-bottom:0px;margin-top:0px;">New</button>
+								  <button type="button" id="resetAvatar" onclick="resetAvatar();" class="btn btn-danger" style="min-width:118px;margin-bottom:0px;margin-top:0px;">Reset</button>
+								  <button type="button" id="saveAvatar" style="display:none;min-width:118px;" class="btn btn-success">Set</button>
+								  <button type="button" id="cancelAvatar" onclick="cancelAvatar();" class="btn btn-danger" style="display:none;min-width:118px;margin-bottom:0px;margin-top:0px;">Cancel</button>
+							   </div>
+						 </div>
+				 </div>
+				 <div class="col-md-8">
+
+					<form id="profileForm">
+					  <div class="form-group">
+						<input type="text" class="form-control" id="inputNick"  name="inputNick" placeholder="Enter nick name">
+
+					  </div>
+					   <div class="form-group">
+						<input type="text" class="form-control" email id="inputFullName"  name="fullName" placeholder="Enter full name.">
+
+					  </div>
+					   <div class="form-group">
+						<input type="password" email class="form-control" name="inputPassword" id="inputPassword" placeholder="If you wish to change password, enter new one.">
+
+					  </div>
+					</form>
+					 <button type="button" onclick="saveProfile();" class="btn btn-danger">Save profile</button>
+				</div>
+			 </div>
+			</div>
+	  </center>
+	</div>
+</div>
+    <!-- Core Javascript -->
+        <div style='display:none;' id='chatDiv'>
+          <div class="chatMessages"></div>
+          <div style='width:90%;padding:5px;bottom:0px;padding-bottom:5px;'>
+            <textarea style='width:100%;font-size: 20px;' class='form-control' rows='2' id='message'></textarea>
+            <button onclick='sendChatMessage();' style='float:right;margin-top:5px;font-size:20px;margin-bottom:10px;' class='ntn btn-primary btn-large;'>Send</button>
+          </div>
+        </div>
+    <div id="chatMessageMaster" style="display:none;border-radius: 7px; background: white;margin-bottom:5px;margin-left:5px;width:95%;">
+      <table style="width:100%">
+        <tr>
+          <td style='vertical-align:top;max-width:60px;width:60px;'><img style="width:55px;height:auto;" avatar src="" /></td>
+          <td style="vertical-align:top;font-weight:bold;"><strong style="font-weight:900;" sender></strong>
+          <p style="border-top: 2px solid black;" message></p></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+  <div id="master" style="display:none;">
+    <div class="col l4 m12 s12 gallery-item  gallery-filter polygon "  artsearch_m="J.Cole" artname="J.Cole" cardid="27" order="2" style="position:relative;" category="">
+        <div class="placeholder">
+            <div class="gallery-curve-wrapper" pageid="J.Cole">
+                <a class="gallery-cover gray">
+                    <p class="gallery-name" style="position: absolute;top: 258px;left: 0;width: 100%;"><span class="waves-effect waves-light btn">J.Cole</span><span class="btn-floating btn-large waves-effect waves-light count">2</span></p>
+                    <img class="responsive-img" image  alt="placeholder">
+                </a>
+                <div class="gallery-header invisible"></div>
+                <div class="gallery-body">
+                    <div class="title-wrapper">
+                        <span class="btn-floating btn-large waves-effect waves-light">3</span>
+                        <h3>J.Cole</h3>
+                        <span class="price">Jermaine Lamarr Cole<br>
+                                January 28, 1985 (age 33)<br>
+                                Raleigh, North Carolina, U.S<br>
+                              </span>
+                        </div>
+                        <p class="description"></p>
+                        <p class="description">
+                            <!-- Three Line List with secondary info and action -->
+                        </p>
+                        <ul class="collapsible"></ul>
+                        <div class="carousel-wrapper">
+                            <div class="carousel">
+                                <a class="carousel-item" href="#one!"><img src="images/pushat/artist-01.jpg"></a>
+
+                            </div>
+                        </div>
+                        <div id="socials">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+<script type="text/javascript">
+var Body = $('body');
+Body.addClass('preloader-site');
+  $('.preloader-wrapper').fadeIn();
+  $(window).load(function() {
+    $('.preloader-wrapper').fadeOut();
+    $('body').removeClass('preloader-site');
+
+    $("#adModal").modal();
+});
+var cards = {};
+var $masonry = null;
+function locationHashChanged() {
+  art = window.location.hash.substring(1);
+
+  if (art != "") {
+
+  } else {
+    $(".back-btn").trigger("click");
+  //  $("#chatDiv").hide();
+    $('[share]').popover('hide');
+    $("[share]").remove();
+//    $("#chatDiv").hide();
+
+  }
+}
+
+window.onhashchange = locationHashChanged;
+$(window).scroll(function() {
+  if ($(".pin-top").length > 0) {
+    $("#sc").css({
+      position: "relative",
+      top: -64
+    })
+    $("#card_search").css({
+      borderColor: "black",
+      background: "white",
+      color: "black"
+    })
+  }
+  if ($(".pinned").length > 0) {
+    $("#sc").css({
+      position: "fixed",
+      top: 0
+    })
+    $("#card_search").css({
+      borderColor: "black",
+      background: "white",
+      color: "black"
+    })
+  }
+});
+if (location.protocol != 'https:') {
+ location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+function checkNewsNumber(userid) {
+  if (userid !== undefined) {
+      $.ajax({
+        url: "/ajax/getNewsNumber.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+          userid: userid
+        },
+        success: function(res) {
+          $("[newNews]").html(res.total);
+
+          for (var key in res.cards) {
+
+           $("[newsid='" + key + "']").html(res.cards[key]);
+
+          }
+        }
+      })
+    } else {
+      $.ajax({
+        url: "/ajax/getNewsNumber.php",
+        type: "GET",
+        dataType: "json",
+        success: function(res) {
+          $("[newNews]").html(res.total)
+          for (var key in res.cards) {
+            $("[newsid='" + key + "']").html(res.cards[key]);
+          }
+        }
+      })
+    }
+    $.ajax({
+      url: "/ajax/getMessagesNumber.php",
+      type: "GET",
+      dataType: "json",
+      success: function(res) {
+
+        for (var key in res.cards) {
+          $("[messageid='" + key + "']").html(res.cards[key]);
+        }
+      }
+    })
+}
+
+$.urlParam = function(name){
+
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+  if (results==null) {
+     return null;
+  }
+  return decodeURI(results[1]) || 0;
+}
+$(document).ready(function() {
+//  delete localStorage  if (localStorage.user !== undefined) {
+  if (false) {
+    window.location.href = "https://accounts.spotify.com/authorize/?client_id=e2f98825e9464e3e8691b9e154ecddc0&response_type=code&redirect_uri=https%3A%2F%2Fgoat100.com/spotify&scope=user-read-private%20user-read-email&state=34fFs29kd09";
+  } else {
+
+    localStorage.spotify_token = "BQDuSiGmD-4kRctzDL8zVuu5ApD3OmJtsNrVeuvrL5Pbrb08QoiiYPf7sdlNMvjgfsj6t7JGMf8VLMfCD4JwO3LzK_vr18C8cqXuWhpLIe8ghnr_e8lZmaccK80QMAuPm_Yu807FYMKT3Ipd_092uTRu8Y0n_B0IyQ";
+    localStorage.spotify_refresh = "AQDqfv8-Mfk1EusrjaRepa3s9IGVMlk8Ov5zt6yOeCZrKq25z4btTbGH9qEtqjVD8SyY0ulm2-8pi2IbE9FfAQrAvXycSUF9W_9LVfj11LDNt3BTg4iX-mLumzUfDuJBpXE";
+    $.ajax(
+    {
+      method: "POST",
+      url: "https://accounts.spotify.com/api/token",
+      data: {
+        'client_id': 'e2f98825e9464e3e8691b9e154ecddc0',
+        'client_secret': '3f947269b85f45d78ed3318c7a244a76',
+        "grant_type":    "refresh_token",
+        "refresh_token":  localStorage.spotify_refresh
+      },
+      success: function(result) {
+
+        localStorage.spotify_token = result.access_token;
+
+      },
+    });
+
+    setInterval(function() {
+        $.ajax(
+        {
+          method: "POST",
+          url: "https://accounts.spotify.com/api/token",
+          data: {
+            'client_id': 'e2f98825e9464e3e8691b9e154ecddc0',
+            'client_secret': '3f947269b85f45d78ed3318c7a244a76',
+            "grant_type":    "refresh_token",
+            "refresh_token":  localStorage.spotify_refresh
+          },
+          success: function(result) {
+            localStorage.spotify_token = response.access_token;
+          },
+        });
+
+    }, 3500000);
+  }
+  if (localStorage.user !== undefined) {
+    var u = $.parseJSON(localStorage.user);
+    ws = new ReconnectingWebSocket();
+    $("[login]").hide();
+    $("[logout]").show();
+    $("[register]").hide();
+    $("[profile]").show();
+    checkNewsNumber(u.id);
+
+  } else {
+    $("[login]").show();
+    $("[logout]").hide();
+    $("[register]").show();
+    $("[profile]").hide();
+    checkNewsNumber();
+  }
+
+
+
+$("#catlist").bind("change", function() {
+  $("[c='" + $("#catlist").val() + "']").trigger("click");
+  $("#card_search").prop("disabled", true);
+  initialzeSearch();
+
+})
+$('.modal').modal();
+  if (localStorage.user !== undefined) {
+    var u = $.parseJSON(localStorage.user);
+    ws = new ReconnectingWebSocket();
+    $("[login]").hide();
+    $("[logout]").show();
+    $("[register]").hide();
+    $("[profile]").show();
+
+  } else {
+    $("[login]").show();
+    $("[logout]").hide();
+    $("[register]").show();
+    $("[profile]").hide();
+  }
+  var t = (new Date()).getTime();
+  art = window.location.hash.substring(1);
+  $.getScript("js/mainScript.js?v=" + t, function() {  });
+  $.getScript("js/firebaseHandler.js?v=" + t, function() {});
+  $.getScript("js/init.js?v=" + t, function() {  });
+
+
+  var art = "";
+  art = window.location.hash.substring(1);
+  getRecords();
+
+
+
+});
+var cat = "hottest";
+//var artists = null;
+function sortTable() {
+
+  if ($("#sortOrder").hasClass("asc")) {
+    var ordrs = [[parseInt($("#sortcols").val()), "asc"]];
+  } else {
+    var ordrs = [[parseInt($("#sortcols").val()), "desc"]];
+  }
+  //  $("#rows").html("");
+sorting = true;
+//  filtering = true;
+  aTable
+    .order( ordrs )
+    .draw();
+
+}
+function initialzeSearch() {
+  $("#card_search").find("option").remove();
+  try {
+    $("#card_search").select2('destroy');
+  } catch(err) {
+  //  alert(err)
+  }
+  var srch = [];
+  $("<option value='-1'>Select artist</option>").appendTo($("#card_search"));
+  $.ajax({
+    url: "/ajax/cardsByCategory.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      category: $("#catlist").val()
+    },
+    success: function(res) {
+      $.each(res.data, function() {
+        $("<option value='" + this.id + "'>" + this.name + "</option>").appendTo($("#card_search"));
+
+      })
+      $('#card_search').select2({
+         width: 'resolve',
+         "language": {
+            "noResults": function(){
+              var html = "<div style='width:100%;text-align:center;'>";
+              html += "<h5>Artist not found?</h5>";
+              html += "<span style='font-size:16px;'><b>Request them below. Every week we count votes and add most voted to the platform.</b></span><br />";
+              html += "<br /><a href='javascript: requestArtist(this);' class='btn btn-danger'>Request An Artist</a>";
+              return html;
+            }
+          },
+          escapeMarkup: function (markup) {
+            return markup;
+          }
+      });
+      $('#card_search').off('select2:select');
+      setTimeout(function() {
+        $("#card_search").prop("disabled", false);
+      }, 1500)
+      $('#card_search').on('select2:select', function (e) {
+          var csel = e.params.data;
+          $("#searchModal").modal('close');
+          alert(JSON.stringify(csel))
+        setTimeout(function() {
+          alert(  $("[searchid='" + csel.id + "']").length)
+        //  $("[searchid='" + csel.id + "']").galleryExpand('open');
+          $("[searchid='" + csel.id + "']").trigger("click");
+        }, 200);
+      });
+    }
+  });
+  /*    $.each($(".gallery-item"), function() {
+
+        if ($(this).attr("category").indexOf($("#catlist").val()) > -1) {
+          $("<option value='" + $(this).attr("cardid") + "'>" + $(this).attr("artname") + "</option>").appendTo($("#card_search"));
+        }
+      });*/
+
+}
+var drawing = false;
+function requestArtist(obj) {
+  var $inp = $("[type='search']");
+  swal({
+    type: "question",
+    text: "Request artist " + $inp.val(),
+    confirmButtonText: "Request artist",
+    showCancelButton: true
+
+  }).then((result) => {
+    if (result.value) {
+      alert("Any action you say Mr Shan");
+    }
+  })
+}
+var aTable = null;
+function getRecords() {
+
+  aTable = $('#artists').DataTable( {
+     buttons: [
+
+    ],
+    "bStateSave": false,
+    "processing": true,
+    "pageLength": 18,
+    "serverSide": true,
+    dom: 'Bfrtip',
+    "info": false,
+    "ajax": {
+        "url": "/ssp_datatables/records.php",
+        "type": "POST"
+     },
+     "columns": [
+          { data: "id" },
+          { data: "category" },
+          { data: "name" },
+          {data: "html"},
+          {data: "LitRank"},
+          {data: "OverallVotes"},
+          {data: "totalvotes"},
+          {data: "visits"},
+          {data: "news"},
+          {data: "comments"}
+      ],
+      "columnDefs": [
+        { "orderable": true, "targets": [4,5,6,7,8,9] },
+         { "type": "html-num ", "targets": [4,5,6,7,8,9] }
+
+      ],
+     "order":  [6, "desc"],
+     "stateSave": false,
+     "drawCallback": function(settings) {
+        $(document).unbind("scroll");
+        $(document).bind("scroll", function() {
+          return false;
+        });
+          if (filtering) {
+            $("#rows").html("");
+            filtering = false;
+            return false;
+          }
+          if (sorting) {
+            $("#rows").html("");
+            sorting = false;
+
+          }
+          var w1 = setInterval(function() {
+            if (!drawing) {
+              clearInterval(w1);
+                drawing = true;
+                drawTable(0);
+
+
+          setTimeout(function() {
+            var info = aTable.page.info();
+            $.each($(".gallery-item"), function() {
+              $(this).attr("style", "");
+            })
+            filtering = false;
+            var tgt = (info.page * 18) + 1;
+
+                    var ww = setInterval(function() {
+                      if ($("[artname]").length == (tgt + $("#artists").find("tbody").find("tr").length)) {
+                        clearInterval(ww);
+                        initializeGallery();
+                        drawing = false;
+                      }
+                    }, 100);
+                }, 1000);
+             }
+
+         }, 100)
+       }
+  });
+  var ww = setInterval(function() {
+      if (aTable != null) {
+        clearInterval(ww);
+        yadcf.init(aTable,
+          [{
+                style_class: "form-control",
+                filter_container_id: "filter_category",
+                filter_type: "text",
+                column_number: 1,
+            }],
+          {   externally_triggered: true}
+        );
+      }
+    }, 100);
+  $(document).bind("scroll", function() {
+    scrolling();
+
+  });
+function drawTable(rnb) {
+
+  var row = $("#artists").find("tbody").find("tr").eq(rnb);
+  if (row !== undefined) {
+    try {
+      var dv = $(atob(row.find("td").eq(3).html()));
+      var fld = dv.find(".responsive-img").attr("src").split("/")[1];
+      var vgl = dv.find("#video-gallery").eq(0).html();
+
+      var ths = row;
+      $.ajax({
+        url: "/ajax/listArtistImages.php?folder=" + fld,
+        type: "GET",
+        success: function(res) {
+          var cdd = res.split(",");
+          var cdd1 = [];
+          $.each(cdd, function() {
+            cdd1.push("Test_Enviroment/images/" + fld + "/" + this);
+          })
+
+          artistImages[dv.attr("cardid")] = cdd1.join(",");
+
+          var ii = res.split(",");
+          dv.attr("imgs", res);
+          var r = ii[Math.floor(Math.random() * (ii.length - 1))];
+
+          $.each(dv.find("a"), function() {
+            $(this).remove()
+          });
+
+          $.each(cdd1, function() {
+            $('<a class="carousel-item" href="' + this + '"><img src="' + this + '"></a>').appendTo(dv.find(".carousel"));
+          })
+
+          drawArtist(dv[0].outerHTML, r, fld, vgl);
+          rnb++;
+          if (rnb < 18) {
+            drawTable(rnb)
+          } else {
+            drawing = false;
+          }
+        }
+      });
+  } catch(err) {
+      return true;
+  }
+ } else {
+  return true;
+ }
+}
+
+//  initializeGallery();
+/*  if (artists == null) {
+      $.ajax({
+        url: "/ajax/getRecords.php",
+        type: "POST",
+        async: false,
+        success: function(res) {
+
+          artists = res;
+          draw();
+        }
+      })
+    } else {
+      draw();
+    }*/
+}
+var aImages = [];
+function urlExists(url,el, callback){
+
+  $.ajax({
+    type: 'HEAD',
+    url: url,
+    success: function(r){
+			el.attr("href", el.find("img").attr("src"));
+      callback(true);
+    },
+    error: function(r) {
+     if (aImages.length > 0) {
+
+			el.find("img").attr("src", aImages[1].url);
+      el.attr("href", el.find("img").attr("src"));
+      aImages = [];
+    } else {
+      el.remove();
+    }
+      callback(false);
+    }
+  });
+}
+function drawArtist(art, ii, fld, vgl) {
+
+  var el = $(art);
+  var dv = document.createElement("DIV");
+  dv.innerHTML = art;
+  cards[$(dv).find("div").eq(0).attr("cardid")] = dv.innerHTML;
+
+  var newDiv = $($("#master").html());
+  newDiv.find(".responsive-img").attr("src", "Test_Enviroment/images/" + fld + "/" + ii);
+  newDiv.find(".responsive-img").attr("style", "width:100%;");
+  newDiv.find(".gallery-name").html($(dv).find(".gallery-name").html());
+  newDiv.attr("artsearch_m",$(dv).find("div").eq(0).attr("artsearch_m"));
+  newDiv.attr("artname",$(dv).find("div").eq(0).attr("artname"));
+  newDiv.find(".gallery-name").find("span").eq(0).html($(dv).find("div").eq(0).attr("artname"));
+  newDiv.attr("cardid",$(dv).find("div").eq(0).attr("cardid"));
+  newDiv.attr("searchid",$(dv).find("div").eq(0).attr("cardid"));
+  var cid = $(dv).find("div").eq(0).attr("cardid");
+  newDiv.attr("category",$(dv).find("div").eq(0).attr("category"));
+  if (vgl !== undefined) {
+    videos[$(dv).find("div").eq(0).attr("cardid")] = vgl;
+    newDiv.find("#video-gallery").html(vgl);
+  } else {
+    videos[$(dv).find("div").eq(0).attr("cardid")] = "";
+  }
+  var html = '<span newstag class="waves-effect waves-light btn" style="background-color: rgba(255, 0, 0, 0.5);">';
+  html += '<i class="far fa-newspaper"></i>';
+  html += '<span newsid="' + cid + '" style="margin-left: 10px;font-size: large;">&nbsp;</span><br>';
+  html += '<i class="far fa-comments"></i>';
+  html += '<span messageid="' + cid + '" style="margin-left: 10px;font-size: large;">&nbsp;</span>';
+  html +=  '</span>';
+/*    $('<div infos style="padding:10px;z-index:1;width:auto;display:inline-block;float:right;font-size:15px;background-color:red;color:white;position:absolute;top:20px;right:20px;text-align:right;"><a style="margin-top:10px;float:left;color:white;" href="#">News <span style="color:white;float:right;" newsid="' + cid + '" class="badge">&nbsp;</span></a><br><a style="color:white;margin-top:10px;" href="#">Comments <span style="color:white;" comments messageid="' + cid + '" class="badge">&nbsp;</span></a>').appendTo(newDiv);*/
+  $(html).appendTo(newDiv.find(".gallery-cover.gray"));
+
+  newDiv.appendTo($("#rows"));
+  newDiv[0].className = $(dv).find("div").eq(0)[0].className;
+  /*newDiv.css({
+    height: 900,
+    minHeight: 900,
+    maxHeight: 900
+  })*/
+
+}
+function draw() {
+  //$("#rows").html("");
+
+  //var $el = $(artists);
+  var elms = artists.split("<!--endartist-->");
+
+  $.each(elms, function(ind) {
+    if (this != "") {
+      var el = $(this);
+      var dv = document.createElement("DIV");
+      dv.innerHTML = this;
+      cards[$(dv).find("div").eq(0).attr("cardid")] = dv.innerHTML;
+      var newDiv = $($("#master").html()).appendTo($("#rows"));
+      newDiv.find(".responsive-img").attr("src", $(dv).find(".responsive-img").attr("src"));
+      newDiv.find(".gallery-name").html($(dv).find(".gallery-name").html());
+      newDiv.attr("artsearch_m",$(dv).find("div").eq(0).attr("artsearch_m"));
+      newDiv.attr("artname",$(dv).find("div").eq(0).attr("artname"));
+      newDiv.attr("cardid",$(dv).find("div").eq(0).attr("cardid"));
+      newDiv.attr("searchid",$(dv).find("div").eq(0).attr("cardid"));
+      var cid = $(dv).find("div").eq(0).attr("cardid");
+      newDiv.attr("category",$(dv).find("div").eq(0).attr("category"));
+      var html = '<span newstag class="waves-effect waves-light btn" style="background-color: rgba(255, 0, 0, 0.5);">';
+      html += '<i class="far fa-newspaper"></i>';
+      html += '<span newsid="' + cid + '" style="margin-left: 10px;font-size: large;">&nbsp;</span><br>';
+      html += '<i class="far fa-comments"></i>';
+      html += '<span messageid="' + cid + '" style="margin-left: 10px;font-size: large;">&nbsp;</span>';
+      html +=  '</span>';
+  /*    $('<div infos style="padding:10px;z-index:1;width:auto;display:inline-block;float:right;font-size:15px;background-color:red;color:white;position:absolute;top:20px;right:20px;text-align:right;"><a style="margin-top:10px;float:left;color:white;" href="#">News <span style="color:white;float:right;" newsid="' + cid + '" class="badge">&nbsp;</span></a><br><a style="color:white;margin-top:10px;" href="#">Comments <span style="color:white;" comments messageid="' + cid + '" class="badge">&nbsp;</span></a>').appendTo(newDiv);*/
+      $(html).appendTo(newDiv);
+      newDiv[0].className = $(dv).find("div").eq(0)[0].className;
+    }
+  });
+
+  var ww = setInterval(function() {
+    try {
+
+      initializeGallery(cat);
+      clearInterval(ww);
+    } catch(err) {
+
+    }
+  //  $masonry = $('.gallery');
+
+  // layout Masonry after each image loads
+  //  $masonry.masonry('layout');
+
+
+  }, 3000)
+  /*setTimeout(function() {
+
+      $.each($(".gallery-cover"), function() {
+        $(this).attr("artsearch", $(this).closest(".gallery-item").attr("artsearch_m"));
+        $(this).attr("cardid", $(this).closest(".gallery-item").attr("cardid"));
+      });
+      $(".gallery-cover").bind("click", function(e) {
+        $("[clone]").remove();
+        var u = $.parseJSON(localStorage.user);
+        var ww = setInterval(function() {
+          if ($(".back-btn").length > 0) {
+            clearInterval(ww);
+            $(".back-btn").attr("onclick", "$('[newstag]').css({zIndex: 2});history.pushState({}, 'goat100','/');$('title').text('GOAT100 - Gratest Of All Time 100');$('[linkedin]').remove();$('[share]').popover('hide');$('[share]').remove();$('[twitter]').remove();");
+            $('title').text("GOAT100 - " + artName);
+          }
+        }, 100);
+        $("#chatDiv").attr("cardid",$(this).attr("cardid"));
+        $("#message").val("");
+
+        $.ajax({
+          url: "/ajax/getConversation.php",
+          type: "POST",
+          dataType: "json",
+          data: {cardid: $(this).closest(".gallery-item").attr("cardid")},
+          success: function(res) {
+            var options = {
+                year: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                month: "2-digit",
+                day: "numeric"
+            };
+            $.each(res.records, function() {
+              var $dv = $("#chatMessageMaster").clone();
+              $dv.attr("clone", "1");
+              $dv.appendTo($(".chatMessages"));
+              var usr = $.parseJSON(this.user);
+              $dv.find("[avatar]").attr("src", usr.avatar);
+              var dt = new Date(this.date);
+              $dv.find("[sender]").html(usr.nick + "<br />" + dt.toLocaleDateString("en", options));
+              $dv.find("[message]").html(atob(this.message));
+              $dv.show();
+            });
+          //  $("#chatDiv").show();
+            $(".chatMessages").scrollTop($(".chatMessages")[0].scrollHeight);
+          }
+        })
+
+
+        var $el = $(this).closest(".gallery-item").find(".gallery-body").find(".btn-floating.btn-large.waves-effect.waves-light");
+        $el.html($(this).closest(".gallery-item").attr("order"));
+        var cid = $(this).closest(".gallery-item").attr("cardid");
+        var $act = $(this).closest(".gallery-item").find(".gallery-action");
+        var stateObj = { foo: "bar" };
+        var artName = $(this).closest(".gallery-item").attr("artName");
+        history.pushState(stateObj, artName,"#" + $(this).closest(".gallery-item").attr("artsearch_m"));
+        $('title').text("GOAT100 - " + artName);
+        $act.find("a").eq(0).unbind("click");
+        $act.find("a").eq(1).unbind("click");
+        var ths = this;
+        var dsc = escape($(ths).closest(".gallery-item").find(".description").text());
+        var ttl =  artName
+
+
+        $act.find("a").eq(0).bind("click", function() {
+          vote("Like", cid, artName, 1);
+        });
+        $act.find("a").eq(1).bind("click", function() {
+          vote("UnLike", cid, artName, -1)
+        });
+        $("div[id='disqus_thread']").remove();
+        var t = $(e.target);
+        $('title').text("GOAT100 - " + artName);
+
+        var pid = t.closest(".gallery-curve-wrapper").attr("pageid");
+
+
+
+      });
+      var art = window.location.hash.substring(1);
+      if (art != "") {
+        setTimeout(function() {
+          $("[artsearch='" + art + "']").trigger("click");
+          var ww = setInterval(function() {
+            if ($(".back-btn").length > 0) {
+              clearInterval(ww);
+              $(".back-btn").attr("onclick", "$('[linkedin]').remove();$('[twitter]').remove();$('[share]'').popover('hide');$('[share]').remove();history.pushState({}, 'goat100','/');$('title').text('GOAT100 - Gratest Of All Time 100');");
+
+            }
+          }, 100)
+        }, 1500)
+      } else {
+        history.pushState({}, "goat100", "");
+      }
+    }, 2000);*/
+//  $el.appendTo("#rows");
+  //  $("#rows").html(res);
+}
+var filtering = false;
+var sorting = false;
+	function showCat(obj) {
+//    $masonry = null;
+    filtering = true;
+    cat = $(obj).attr("c");
+    if (cat == "all") {
+        yadcf.exResetFilters(aTable, [1]);
+    } else {
+      yadcf.exResetFilters(aTable, [1]);
+      yadcf.exFilterColumn(aTable, [[1, cat]]);
+    }
+    initializeGallery(cat);
+	}
+  function fireShare(media, cid, artsearch) {
+    if (media == "facebook") {
+      FB.ui({
+          method: 'share',
+          href: "https://goat100.com/share.php?id=" + cid + "&artsearch=" + artsearch,
+      }, function(response){});
+      return
+    }
+
+    $("#" + media + "_share_" + cid).trigger("click");
+  }
+  </script>
+  <!--<script type="text/javascript" src="cordova.js"></script>-->
+<script src="https://cdn.jsdelivr.net/materialize/0.98.0/js/materialize.min.js"></script>
+  <script src="/js/lg-video.js"></script>
+  <script src="/js/color-thief.min.js"></script>
+<script src="/js/galleryExpand.js"></script>
+<script src="/js/init.js"></script>
+
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : '192774091355244',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v4.0'
+      });
+    };
+  window.onscroll = function () {
+    scrollFunction()
+  };
+  setInterval(function() {
+    $("#ad1").toggle();
+    $("#ad2").toggle();
+  }, 60000)
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("navbar").style.bottom = "0";
+    } else {
+      document.getElementById("navbar").style.bottom = "-100px";
+    }
+  }
+  </script>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+  <div id="navbar">
+    <a href="https://www.swirkly.com" target="_blank">
+      <img id ="ad2" style="display: none;" src= "images\Advertisement_Bar_02.gif"></img>
+      <video id="ad1" loop autoplay muted width="100%">
+        <source src="images\Advertisement_Bar_04.mp4" type="video/mp4">
+        </video>
+
+      </a>
+      <span  onclick="closeAds()" class="close">&times;</span>
+
+  </div>
+  <style>
+  @media (min-width: 768px) {
+    #adModal {
+        width: 33%;
+        height: 75%;
+        margin: 75px auto;
+    }
+  }
+  @media (max-width: 768px) {
+    #adModal {
+        width: 70%;
+        height: 95%;
+        margin: 10px auto;
+    }
+
+  }
+  @media (max-width: 520px) {
+    .gallery-name {
+      top:125px !important;
+    }
+  }
+  </style>
+</html>
